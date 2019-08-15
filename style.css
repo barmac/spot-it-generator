@@ -1,0 +1,101 @@
+* {
+  --camunda-color: #e62744;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+}
+
+.card {
+  border-radius: 50%;
+  border-color: grey;
+  border-style: dashed;
+  width: 400px;
+  height: 400px;
+  border-width: 1px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+}
+
+.item img {
+  width: 100%;
+  height: auto;
+}
+
+.item {
+  border-color: grey;
+  border-style: dashed;
+  width: 50px;
+  height: 50px;
+  border-width: 1px;
+}
+
+.item:nth-child(2n) {
+  width: 100px;
+  height: 100px;
+}
+
+.item:nth-child(3n + 1) {
+  justify-self: right;
+}
+
+.item:nth-child(3n) {
+  justify-self: left;
+}
+
+.item:nth-child(-n + 3) {
+  align-self: end;
+}
+
+.item:nth-child(n + 6) {
+  align-self: start;
+}
+
+.item:nth-child(5) {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+@media print {
+  .card {
+    width: 8.5cm;
+    height: 8.5cm;
+    border-width: .02cm;
+  }
+
+  .cards-container {
+    grid-column-gap: .2cm;
+    grid-row-gap: .2cm;
+    margin: 1cm;
+    break-after: page;
+  }
+
+  .cards-container:last-child {
+    break-after: avoid;
+  }
+
+  .item {
+    width: 1cm;
+    height: 1cm;
+    border-style: none;
+  }
+
+  .item:nth-child(2n) {
+    width: 2cm;
+    height: 2cm;
+  }
+
+  @page {
+    margin-top: 2cm;
+    margin-bottom: 2cm;
+    margin-left: 2cm;
+    margin-right: 2cm;
+  }
+}

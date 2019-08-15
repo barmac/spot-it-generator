@@ -1,0 +1,19 @@
+{
+  "name": "spot-it-generator",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "bin": "./bin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Maciej Barelkowski",
+    "url": "https://github.com/barmac"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "mri": "^1.1.4"
+  }
+}
