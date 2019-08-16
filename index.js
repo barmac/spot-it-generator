@@ -47,19 +47,13 @@ function getPages(cards) {
 }
 
 function getCardSymbols(cardTemplate, symbols) {
-  const cardSymbols = cardTemplate.map(value => symbols[value]);
-
-  // include one empty item
-  cardSymbols.splice(4, 0, '');
-
-  return cardSymbols;
+  return cardTemplate.map(value => symbols[value]);
 }
 
 function getCard(items) {
   return `
 <div class="card">
-${items.map(item => item !== '' ? `<div class="item"><img src="${item}"></div>` :
-  '<div class="item"></div>').join('\n')}
+${items.map(item => `<div class="item"><img src="${item}"></div>`).join('\n')}
 </div>
   `;
 }
