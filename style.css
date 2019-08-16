@@ -25,10 +25,11 @@
 }
 
 .item {
-  border-color: grey;
-  border-style: dashed;
   width: 50px;
   height: 50px;
+
+  border-color: grey;
+  border-style: dashed;
   border-width: 1px;
 
   display: grid;
@@ -36,13 +37,12 @@
   justify-items: center;
 }
 
-.item:nth-child(2n) {
-  width: 100px;
-  height: 100px;
-}
-
 .item:nth-child(3n + 1) {
   justify-self: right;
+}
+
+.item:nth-child(3n + 2) {
+  justify-self: center;
 }
 
 .item:nth-child(3n) {
@@ -53,8 +53,40 @@
   align-self: end;
 }
 
-.item:nth-child(n + 6) {
-  align-self: start;
+.item:nth-child(4),
+.item:nth-child(5),
+.item:nth-child(6) {
+  align-self: center;
+}
+
+/* object specific transformations */
+
+.item:nth-child(1) {
+  transform: scale(1.5);
+}
+
+.item:nth-child(2) {
+  transform: scale(2) translateY(-40%);
+}
+
+.item:nth-child(4) {
+  transform: scale(1.5) translateX(-40%);
+}
+
+.item:nth-child(5) {
+  transform: scale(2) translateX(-10%);
+}
+
+.item:nth-child(6) {
+  transform: scale(2.25) translateX(20%) translateY(20%);
+}
+
+.item:nth-child(7) {
+  transform: scale(2);
+}
+
+.item:nth-child(8) {
+  transform: scale(2.5) translateY(30%) translateX(30%);
 }
 
 @media print {
@@ -79,11 +111,6 @@
     width: 1cm;
     height: 1cm;
     border-style: none;
-  }
-
-  .item:nth-child(2n) {
-    width: 2cm;
-    height: 2cm;
   }
 
   @page {
