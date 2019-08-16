@@ -2,13 +2,18 @@
 
 const fs = require('fs');
 
+const path = require('path');
+
 const mri = require('mri');
+
+const puppeteer = require('puppeteer');
 
 const getHtmlTemplate = require('.');
 
 const argv = process.argv.slice(2);
 
-const { _: input, help, output } = mri(argv, {
+const { _: input, help, output, html: printHtml } = mri(argv, {
+  boolean: ['html'],
   alias: {
     o: 'output',
     h: 'help'
@@ -18,6 +23,7 @@ const { _: input, help, output } = mri(argv, {
 if (help || (!input.length && !output)) {
   console.log('Provide input files to create a game template with the symbols.');
   console.log('Optionally, provide --output [-o] to write template to a file instead of stdout.');
+  console.log('Pass --html if you want to get the raw html template instead of PDF file.')
 
   return;
 }
@@ -30,10 +36,37 @@ if (input.length < 57) {
   throw new Error(`Required 57 symbols, provided only ${input.length}.`);
 }
 
-const template = getHtmlTemplate(input);
+const html = getHtmlTemplate(input);
 
-if (output) {
-  fs.writeFileSync(output, template);
-} else {
-  console.log(template);
+if (printHtml) {
+  return writeOutput(html, output);
+}
+
+getPdf(html).then(pdf => {
+  writeOutput(pdf, output);
+})
+
+async function getPdf(html) {
+  fs.writeFileSync('./.tmp.html', html);
+
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  await page.goto('file://' + path.resolve(__dirname, './.tmp.html'));
+
+  const pdf = await page.pdf({ format: 'A4' });
+
+  await browser.close();
+
+  fs.unlinkSync('./.tmp.html')
+
+  return pdf;
+}
+
+function writeOutput(content, output) {
+  if (output) {
+    fs.writeFileSync(output, content);
+  } else {
+    process.stdout.write(content);
+  }
 }
