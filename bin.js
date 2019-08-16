@@ -23,7 +23,11 @@ if (help || (!input.length && !output)) {
 }
 
 if (!input.length) {
-  throw new Error('No input provided');
+  throw new Error('No input provided.');
+}
+
+if (input.length < 57) {
+  throw new Error(`Required 57 symbols, provided only ${input.length}.`);
 }
 
 const template = getHtmlTemplate(input);
