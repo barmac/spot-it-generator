@@ -115,11 +115,11 @@
 }
 
 .item:nth-child(7) {
-  transform: scale(2) rotate(70deg);
+  transform: rotate(70deg);
 }
 
 .item:nth-child(8) {
-  transform: scale(2.5) translateY(30%) translateX(30%) rotate(10deg);
+  transform: scale(2.5) translateX(10%) translateY(30%);
 }
 
 @media print {

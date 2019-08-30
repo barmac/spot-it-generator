@@ -32,9 +32,11 @@ function getHtmlTemplate(symbols, rules) {
 function getCards(symbols) {
   const cards = DECK_TEMPLATE.map(template => {
     const cardSymbols = getCardSymbols(template, symbols);
-    const card = getCard(cardSymbols);
 
-    return card;
+    // shuffle before generating template
+    shuffle(cardSymbols);
+
+    return getCard(cardSymbols);
   });
 
   return cards;
@@ -74,4 +76,15 @@ function getPage(cards) {
   return `<div class="cards-container">
   ${cards.join('')}
 </div>`;
+}
+
+// helper
+function shuffle(array) {
+  for (let currentElement = array.length - 1; currentElement > 0; currentElement--) {
+    const second = Math.floor(Math.random() * (currentElement + 1));
+
+    const tmp = array[currentElement];
+    array[currentElement] = array[second];
+    array[second] = tmp;
+  }
 }
