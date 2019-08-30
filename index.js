@@ -9,8 +9,14 @@ module.exports = getHtmlTemplate;
  * @param {Array<string>} symbols
  * @returns {string}
  */
-function getHtmlTemplate(symbols) {
+function getHtmlTemplate(symbols, rules) {
   const cards = getCards(symbols);
+
+  if (rules) {
+    const rulesCard = getRulesCard(rules);
+    cards.unshift(rulesCard);
+  }
+
   const pages = getPages(cards);
 
   return `
@@ -34,6 +40,13 @@ function getCards(symbols) {
   return cards;
 }
 
+function getRulesCard(rules) {
+  return `
+<div class="card card-rules">
+  <span>${rules}</span>
+</div>`;
+}
+
 function getPages(cards) {
   const pages = [];
 
@@ -52,10 +65,9 @@ function getCardSymbols(cardTemplate, symbols) {
 
 function getCard(items) {
   return `
-<div class="card">
+<div class="card card-items">
 ${items.map(item => `<div class="item"><img src="${item}"></div>`).join('\n')}
-</div>
-  `;
+</div>`;
 }
 
 function getPage(cards) {

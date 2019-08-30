@@ -12,9 +12,10 @@ const getHtmlTemplate = require('.');
 
 const argv = process.argv.slice(2);
 
-const { _: input, help, output, html: printHtml } = mri(argv, {
+const { _: input, help, output, rules: rulesPath, html: printHtml } = mri(argv, {
   boolean: ['html'],
   alias: {
+    r: 'rules',
     o: 'output',
     h: 'help'
   }
@@ -22,6 +23,7 @@ const { _: input, help, output, html: printHtml } = mri(argv, {
 
 if (help || (!input.length && !output)) {
   console.log('Provide input files to create a game template with the symbols.');
+  console.log('Pass --rules [-r] path to print a rules card, too.');
   console.log('Optionally, provide --output [-o] to write template to a file instead of stdout.');
   console.log('Pass --html if you want to get the raw html template instead of PDF file.')
 
@@ -36,7 +38,13 @@ if (input.length < 57) {
   throw new Error(`Required 57 symbols, provided only ${input.length}.`);
 }
 
-const html = getHtmlTemplate(input);
+let rules;
+
+if (rulesPath) {
+  rules = fs.readFileSync(rulesPath);
+}
+
+const html = getHtmlTemplate(input, rules);
 
 if (printHtml) {
   return writeOutput(html, output);
